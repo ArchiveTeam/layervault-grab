@@ -67,9 +67,15 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
   local html = nil
   
   local function check(url)
-    if (downloaded[url] ~= true and addedtolist[url] ~= true) and not (string.match(url, "%%7B") or string.match(url, "%%7D") or string.match(url, "{") or string.match(url, "}")) then
-      table.insert(urls, { url=url })
-      addedtolist[url] = true
+    if (downloaded[url] ~= true and addedtolist[url] ~= true) and not (string.match(url, "amp;amp;") or string.match(url, "%%7B") or string.match(url, "%%7D") or string.match(url, "{") or string.match(url, "}")) then
+      if string.match(url, "&amp;") then
+        local newurl = string.gsub(url, "&amp;", "&")
+        table.insert(urls, { url=newurl })
+        addedtolist[url] = true
+      else
+        table.insert(urls, { url=url })
+        addedtolist[url] = true
+      end
     end
   end
   
@@ -182,6 +188,11 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
 
     if tries >= 2 and not string.match(url["url"], "layervault%.com") or string.match(url["url"], "layervau%.lt") then
       io.stdout:write("\nI give up...\n")
+      io.stdout:flush()
+      tries = 0
+      return wget.actions.EXIT
+    elseif tries >= 5 and status_code == 500 then
+      io.stdout:write("\nSkip this url...\n")
       io.stdout:flush()
       tries = 0
       return wget.actions.EXIT
