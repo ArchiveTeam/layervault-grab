@@ -46,15 +46,19 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   
   if item_type == "project" and (downloaded[url] ~= true or addedtolist[url] ~= true) then
     if (string.match(url, "/"..item_value.."[0-9][0-9]") and not string.match(url, "/"..item_value.."[0-9][0-9][0-9]")) or html == 0 or (intable(site, url) == true and intable(author, url) == true) or string.match(url, "%.css") or string.match(url, "%.js") then
-      addedtolist[url] = true
-      return true
+      if not string.match(url, "amp;amp;") then
+        addedtolist[url] = true
+        return true
+      end
     else
       return false
     end
   elseif item_type == "file" and (downloaded[url] ~= true or addedtolist[url] ~= true) then
     if (string.match(url, "/"..item_value.."[0-9][0-9]") and not string.match(url, "/"..item_value.."[0-9][0-9][0-9]")) or html == 0 or (intable(site, url) == true and intable(author, url) == true and intable(filename, url) == true) or string.match(url, "%.css") or string.match(url, "%.js") then
-      addedtolist[url] = true
-      return true
+      if not string.match(url, "amp;amp;") then
+        addedtolist[url] = true
+        return true
+      end
     else
       return false
     end
