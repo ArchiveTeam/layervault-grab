@@ -234,16 +234,11 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     
     tries = tries + 1
 
-    if tries >= 2 and not string.match(url["url"], "layervault%.com") or string.match(url["url"], "layervau%.lt") then
+    if tries >= 10 then
       io.stdout:write("\nI give up...\n")
       io.stdout:flush()
       tries = 0
       return wget.actions.EXIT
-    elseif tries >= 10 then
-      io.stdout:write("\nI give up...\n")
-      io.stdout:flush()
-      tries = 0
-      return wget.actions.ABORT
     else
       return wget.actions.CONTINUE
     end
