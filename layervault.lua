@@ -188,6 +188,10 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       downloaded[url.url] = true
     end
   end
+
+  if string.match(url["url"], "https?://news%.layervault%.com/click/stories/") then
+    return wget.actions.EXIT
+  end
   
   if status_code >= 500 or
     (status_code >= 400 and status_code ~= 404 and status_code ~= 403) then
