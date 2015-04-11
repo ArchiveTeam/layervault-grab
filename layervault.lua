@@ -46,7 +46,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   
   if (item_type == "project" or item_type == "singleproject") and (downloaded[url] ~= true or addedtolist[url] ~= true) then
     if (item_type == "project" and ((string.match(url, "/"..item_value.."[0-9][0-9]") and not string.match(url, "/"..item_value.."[0-9][0-9][0-9]")) or html == 0 or (intable(site, url) == true and intable(author, url) == true) or string.match(url, "%.css") or string.match(url, "%.js"))) or (item_type == "singleproject" and ((string.match(url, "/"..item_value) and not string.match(url, "/"..item_value.."[0-9]")) or html == 0 or (intable(site, url) == true and intable(author, url) == true) or string.match(url, "%.css") or string.match(url, "%.js"))) then
-      if not string.match(url, "amp;amp;") then
+      if (string.match(url, "%.cloudfront%.com") or string.match(url, "%.amazonaws%.com") or string.match(url, "layervault.com")) and not string.match(url, "amp;amp;") then
         addedtolist[url] = true
         return true
       end
@@ -55,7 +55,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     end
   elseif (item_type == "file" or item_type == "singlefile") and (downloaded[url] ~= true or addedtolist[url] ~= true) then
     if (item_type == "file" and ((string.match(url, "/"..item_value.."[0-9][0-9]") and not string.match(url, "/"..item_value.."[0-9][0-9][0-9]")) or html == 0 or (intable(site, url) == true and intable(author, url) == true and intable(filename, url) == true) or string.match(url, "%.css") or string.match(url, "%.js"))) or (item_type == "singlefile" and ((string.match(url, "/"..item_value) and not string.match(url, "/"..item_value.."[0-9]")) or html == 0 or (intable(site, url) == true and intable(author, url) == true and intable(filename, url) == true) or string.match(url, "%.css") or string.match(url, "%.js"))) then
-      if not string.match(url, "amp;amp;") then
+      if (string.match(url, "%.cloudfront%.com") or string.match(url, "%.amazonaws%.com") or string.match(url, "layervault.com")) and not string.match(url, "amp;amp;") then
         addedtolist[url] = true
         return true
       end
@@ -64,7 +64,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     end
   elseif (item_type == "story" or item_type == "singlestory" or item_type == "user" or item_type == "singleuser") and (downloaded[url] ~= true or addedtolist[url] ~= true) then
     if ((item_type == "user" or item_type == "story") and ((string.match(url, "/"..item_value.."[0-9][0-9]") and not string.match(url, "/"..item_value.."[0-9][0-9][0-9]")) or html == 0 or string.match(url, "%.css") or string.match(url, "%.js"))) or ((item_type == "singlestory" or item_type == "singleuser") and ((string.match(url, "/"..item_value) and not string.match(url, "/"..item_value.."[0-9]")) or html == 0 or string.match(url, "%.css") or string.match(url, "%.js"))) then
-      if not string.match(url, "amp;amp;") then
+      if (string.match(url, "%.cloudfront%.com") or string.match(url, "%.amazonaws%.com") or string.match(url, "layervault%.com")) and not string.match(url, "amp;amp;") then
         addedtolist[url] = true
         return true
       end
