@@ -57,7 +57,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20150411.01"
+VERSION = "20150411.02"
 USER_AGENT = 'ArchiveTeam'
 TRACKER_ID = 'layervault'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -194,7 +194,7 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
         
-        assert item_type in ('project', 'file')
+        assert item_type in ('project', 'file', 'user', 'story', 'singleproject', 'singlefile', 'singleuser', 'singlestory')
         
         a = string.digits
         
@@ -216,7 +216,7 @@ class WgetArgs(object):
             wget_args.append('https://news.layervault.com/u/{0}'.format(item_value))
         elif item_type == 'singlefile':
             wget_args.append('https://layervault.com/api/v2/files/{0}'.format(item_value))
-        elif item_type == 'singleproject:
+        elif item_type == 'singleproject':
             wget_args.append('https://layervault.com/api/v2/projects/{0}'.format(item_value))
         else:
             raise Exception('Unknown item')
