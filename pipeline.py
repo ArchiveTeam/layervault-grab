@@ -57,7 +57,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20150409.01"
+VERSION = "20150411.01"
 USER_AGENT = 'ArchiveTeam'
 TRACKER_ID = 'layervault'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -204,6 +204,20 @@ class WgetArgs(object):
         elif item_type == 'file':
             for url in ['https://layervault.com/api/v2/files/{0}{1}{2}'.format(item_value, sufa, sufb) for sufa in a for sufb in a]:
                 wget_args.append(url)
+        elif item_type == 'user':
+            for url in ['https://news.layervault.com/u/{0}{1}{2}'.format(item_value, sufa, sufb) for sufa in a for sufb in a]:
+                wget_args.append(url)
+        elif item_type == 'story':
+            for url in ['https://news.layervault.com/stories/{0}{1}{2}'.format(item_value, sufa, sufb) for sufa in a for sufb in a]:
+                wget_args.append(url)
+        elif item_type == 'singlestory':
+            wget_args.append('https://news.layervault.com/stories/{0}'.format(item_value))
+        elif item_type == 'singleuser':
+            wget_args.append('https://news.layervault.com/u/{0}'.format(item_value))
+        elif item_type == 'singlefile':
+            wget_args.append('https://layervault.com/api/v2/files/{0}'.format(item_value))
+        elif item_type == 'singleproject:
+            wget_args.append('https://layervault.com/api/v2/projects/{0}'.format(item_value))
         else:
             raise Exception('Unknown item')
         
