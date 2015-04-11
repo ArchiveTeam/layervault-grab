@@ -62,6 +62,15 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     else
       return false
     end
+  elseif (item_type == "story" or item_type == "singlestory" or item_type == "user" or item_type == "singleuser") and (downloaded[url] ~= true or addedtolist[url] ~= true) then
+    if ((item_type == "user" or item_type == "story") and ((string.match(url, "/"..item_value.."[0-9][0-9]") and not string.match(url, "/"..item_value.."[0-9][0-9][0-9]")) or html == 0 or string.match(url, "%.css") or string.match(url, "%.js"))) or ((item_type == "singlestory" or item_type == "singleuser") and ((string.match(url, "/"..item_value) and not string.match(url, "/"..item_value.."[0-9]")) or html == 0 or string.match(url, "%.css") or string.match(url, "%.js"))) then
+      if not string.match(url, "amp;amp;") then
+        addedtolist[url] = true
+        return true
+      end
+    else
+      return false
+    end   
   end
 end
 
@@ -111,7 +120,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
           end
         end
       end
-    elseif item_type == "file" then
+    elseif item_type == "file" or item_type == "singlefile" then
       if (item_type == "file" and (string.match(url, "layervault%.com/api/v2/files/") and string.match(url, "/"..item_value.."[0-9][0-9]") and not string.match(url, "/"..item_value.."[0-9][0-9][0-9]"))) or (item_type == "singlefile" and (string.match(url, "layervault%.com/api/v2/files/") and string.match(url, "/"..item_value) and not string.match(url, "/"..item_value.."[0-9]"))) then
         html = read_file(file)
         for newurl in string.gmatch(html, '"(https?://[^"]+)"') do
